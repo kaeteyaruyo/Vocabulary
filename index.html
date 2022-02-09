@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>背單字</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 32px 0;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            justify-content: center;
+            align-content: center;
+            box-sizing: border-box;
+        }
+
+        main {
+            display: grid;
+            justify-content: center;
+            align-content: center;
+        }
+
+        #word-ch {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div>
+            <span id="word-en"></span>
+            <span id="word-form"></span>
+        </div>
+        <div id="word-ch"></div>
+        <button id="btn-check" onclick="check()">Check</button>
+        <div>
+            <button onclick="previous()">prev</button>
+            <button onclick="reset()">reset</button>
+            <button onclick="next()">next</button>
+        </div>
+    </main>
+    <script>
+        const en = document.querySelector('#word-en');
+        const form = document.querySelector('#word-form');
+        const ch = document.querySelector('#word-ch');
+        const checkButton = document.querySelector('#btn-check');
+        let position = 0;
+
+        const words = [
+        { 'en': 'prescription', 'ch': '處方籤', 'form': 'n.' },
+        { 'en': 'tour', 'ch': '旅行', 'form': 'v.' },
+        { 'en': 'service', 'ch': '維修', 'form': 'v.' },
+        { 'en': 'regulation', 'ch': '法規', 'form': 'n.' },
+        { 'en': 'contract', 'ch': '合約', 'form': 'n.' },
+        { 'en': 'contract', 'ch': '感染、收縮', 'form': 'v.' },
+        { 'en': 'erect', 'ch': '建造、設立', 'form': 'v.' },
+        { 'en': 'appoint', 'ch': '委任、任命', 'form': 'v.' },
+        { 'en': 'appointed', 'ch': '被任命的', 'form': 'adj.' },
+        { 'en': 'appointment', 'ch': '預約（要見面）', 'form': 'n.' },
+        { 'en': 'renovation', 'ch': '翻新', 'form': 'n.' },
+        ];
+
+        function setWord(){
+            ch.style.visibility = 'hidden';
+            en.innerHTML = words[position].en;
+            form.innerHTML = ` (${words[position].form})`;
+            ch.innerHTML = words[position].ch;
+            checkButton.disabled = false;
+        }
+
+        function reset(){
+            position = 0;
+            setWord();
+        }
+
+        function previous(){
+            position--;
+            if(position < 0) position = words.length - 1;
+            setWord();
+        }
+
+        function next(){
+            position++;
+            if(position >= words.length) position = 0;
+            setWord();
+        }
+
+        function check(){
+            ch.style.visibility = 'visible';
+            checkButton.disabled = true;
+        }
+
+        reset();
+    </script>
+</body>
+</html>
